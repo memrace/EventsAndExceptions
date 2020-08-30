@@ -7,46 +7,44 @@ namespace EventsAndExceptions
 {
 	class Speech
 	{
-		private readonly User _creator;
-
-
-		public event EventHandler SpeechCreated; // Создаем событие-делегат.
+		/// <summary>
+		/// Создает делегат ивента.
+		/// </summary>
+		public event EventHandler SpeechCreated;
 		public string Theme { get; set; }
-		public string Creator => _creator.Name;
+		public string Creator { get; set; }
 		
-		public Speech(User creator, string theme)
+		public Speech(string creator, string theme)
 		{
 			Theme = theme;
-			_creator = creator;
+			Creator = creator;
 		}
-
-		public void OnSpeechCreate(SpeechEventArgs e) // Функция-обработчик делегата.
+		/// <summary>
+		/// Метод ответственный за уведомление зарегистрированных объектов о событии.
+		/// </summary>
+		/// <param name="e"></param>
+		public void OnSpeechCreate(SpeechEventArgs e)
 		{
-			EventHandler speechCreated = SpeechCreated;
-			if (speechCreated != null)
-			{
-				speechCreated(this, e);
-			}
+			SpeechCreated?.Invoke(this, e);
 		}
 
 
 
 	}
 
-
+	/// <summary>
+	/// Определяет объект для хранения всей необходимой информации, передаваемой получателем уведомления события.
+	/// </summary>
 	class SpeechEventArgs : EventArgs //
 	{
-		private readonly string _createdTheme;
-		private readonly string _creator;
-
 		public SpeechEventArgs(Speech speech)
 		{
-			_createdTheme = speech.Theme;
-			_creator = speech.Creator;
+			CreatedTheme = speech.Theme;
+			Creator = speech.Creator;
 		}
 
-		public String CreatedTheme => _createdTheme;
-		public String Creator => _creator;
+		public String CreatedTheme { get; }
+		public String Creator { get; }
 
 	}
 
