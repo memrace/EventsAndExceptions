@@ -16,6 +16,11 @@ namespace EventsAndExceptions
 		
 		public Speech(string creator, string theme)
 		{
+			if (creator.Length < 0 & theme.Length < 0)
+			{
+				throw new SpeechException("Creator or Theme cant be empty!");
+			}
+
 			Theme = theme;
 			Creator = creator;
 		}

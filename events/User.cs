@@ -21,7 +21,15 @@ namespace events
 		public User(string name, Speech speech)
 		{
 			Name = name;
-			speech.SpeechCreated += Speech_SpeechCreated;
+			try
+			{
+				speech.SpeechCreated += Speech_SpeechCreated;
+			}
+			catch (SpeechException e)
+			{
+				Console.WriteLine(e.Message);
+			}
+			
 		}
 		/// <summary>
 		/// Метод реализующий ивент-делегат.
